@@ -1,0 +1,33 @@
+dataset_params:
+  batch_size: 256
+  num_workers: 4
+
+model:
+  learning_rate: 2e-4
+  b1: 0.9
+  seed: 61
+  target: unet.UNet
+  params:
+    channel_multiplier: [1, 2, 2, 2]
+    channel: 128
+    n_res_block: 2
+    attn_strides: [16]
+    attn_heads: 1
+  checkpoint_path: sde.pkl
+  epochs: 100
+  ema_decay: 0.9999
+
+SDE:
+  name: 'vpsde'
+  params:
+    beta_min: 0.1
+    beta_max: 20
+    N: 1000
+    eps: 1e-3
+
+sampler:
+  name: 'ODE'
+
+wandb:
+  project: 'Score-Based SDE'
+  name: 'cifar10'
